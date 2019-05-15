@@ -8,17 +8,13 @@ import (
 	"github.com/andy-zhangtao/doctor/model"
 )
 
-func TestPing(t *testing.T) {
+func TestWork(t *testing.T) {
 	rn := model.RemoteNode{
-		IP: "127.0.0.1",
+		IP:       "127.0.0.1",
+		Password: "123456",
+		User:     "test",
 	}
 
-	err := pingNode(rn)
-
+	err := Work(rn)
 	assert.Nil(t, err)
-
-	rn.IP = "127.1.1.1"
-	err = pingNode(rn)
-
-	assert.NotNil(t, err)
 }

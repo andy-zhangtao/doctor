@@ -8,8 +8,8 @@ import (
 	"github.com/sparrc/go-ping"
 )
 
-// Ping 探测远程节点是否可以连通
-func Ping(rn model.RemoteNode) (err error) {
+// pingNode 探测远程节点是否可以连通
+func pingNode(rn model.RemoteNode) (err error) {
 	pinger, err := ping.NewPinger(rn.IP)
 	if err != nil {
 		return
