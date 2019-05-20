@@ -4,13 +4,13 @@ import (
 	"errors"
 	"time"
 
-	"github.com/andy-zhangtao/doctor/model"
+	"github.com/andy-zhangtao/doctor/doctor/model"
 	"github.com/sparrc/go-ping"
 )
 
 // pingNode 探测远程节点是否可以连通
 func pingNode(rn model.RemoteNode) (err error) {
-	pinger, err := ping.NewPinger(rn.IP)
+	pinger, err := ping.NewPinger(rn.Ip)
 	if err != nil {
 		return
 	}

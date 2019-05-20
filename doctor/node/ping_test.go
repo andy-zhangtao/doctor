@@ -5,19 +5,19 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/andy-zhangtao/doctor/model"
+	"github.com/andy-zhangtao/doctor/doctor/model"
 )
 
 func TestPing(t *testing.T) {
 	rn := model.RemoteNode{
-		IP: "127.0.0.1",
+		Ip: "127.0.0.1",
 	}
 
 	err := pingNode(rn)
 
 	assert.Nil(t, err)
 
-	rn.IP = "127.1.1.1"
+	rn.Ip = "127.1.1.1"
 	err = pingNode(rn)
 
 	assert.NotNil(t, err)

@@ -5,12 +5,12 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/andy-zhangtao/doctor/model"
+	"github.com/andy-zhangtao/doctor/doctor/model"
 )
 
 func TestCommand(t *testing.T) {
 	rn := model.RemoteNode{
-		IP:       "127.0.0.1",
+		Ip:       "127.0.0.1",
 		Password: "123456",
 		User:     "test",
 	}

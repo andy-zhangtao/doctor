@@ -9,7 +9,7 @@ import (
 
 	"github.com/pkg/sftp"
 
-	"github.com/andy-zhangtao/doctor/model"
+	"github.com/andy-zhangtao/doctor/doctor/model"
 	"golang.org/x/crypto/ssh"
 )
 
@@ -25,11 +25,11 @@ const (
 // 默认推送到远程节点的/tmp目录中
 func transFileToNode(rn model.RemoteNode, files []string, direct int) (err error) {
 
-	client, err := ssh.Dial("tcp", fmt.Sprintf("%s:22", rn.IP), &ssh.ClientConfig{
-		User: rn.User,
+	client, err := ssh.Dial("tcp", fmt.Sprintf("%s:22", rn.Ip), &ssh.ClientConfig{
+		User: rn.Name,
 		Auth: []ssh.AuthMethod{ssh.Password(rn.Password)},
 		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
-			fmt.Printf("Login %s As %s \n", rn.IP, rn.User)
+			fmt.Printf("Login %s As %s \n", rn.Ip, rn.Name)
 			return nil
 		},
 	})
