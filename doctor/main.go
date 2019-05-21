@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/andy-zhangtao/doctor/doctor/cli"
+	"github.com/andy-zhangtao/doctor/doctor/rpc/impl"
 	"github.com/andy-zhangtao/doctor/doctor/server"
 )
 
@@ -26,6 +27,11 @@ func main() {
 
 	if *isServer {
 		fmt.Println("===Server Mode===")
+		go func() {
+			if err := impl.Run(); err != nil {
+				fmt.Printf("GRPC Error: %s \n", err)
+			}
+		}()
 		server.StartWeb()
 	}
 

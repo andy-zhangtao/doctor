@@ -79,8 +79,13 @@ func handlerUserCmd(key string) {
 
 func loginNode(rn model.RemoteNode) {
 	fmt.Printf("Login %s \n", rn.Ip)
+	err := node.Login(rn)
+	if err != nil {
+		fmt.Println(err)
+	}
 	return
 }
+
 func showNodes() {
 	fmt.Println("---------------------------------------------------------------")
 	fmt.Println()

@@ -8,4 +8,5 @@ COPY bwidow_pq.toml /bwidow_pq.toml
 COPY entrypoint.sh /entrypoint.sh
 COPY cli.sh /cli.sh
 COPY doctor /doctor
+COPY nurse /tmp/nurse
 ENTRYPOINT [ "/entrypoint.sh" ]

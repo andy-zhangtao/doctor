@@ -33,6 +33,10 @@ func sshRemoteNode(rn model.RemoteNode) (err error) {
 		},
 	})
 
+	if err != nil {
+		return fmt.Errorf("login %s error: %v", rn.Ip, err)
+	}
+
 	session, err := client.NewSession()
 	defer session.Close()
 
