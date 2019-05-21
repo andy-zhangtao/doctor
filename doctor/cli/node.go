@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/andy-zhangtao/doctor/doctor/model"
@@ -48,6 +49,14 @@ func handlerUserCmd(key string) {
 	// 	return
 	// }
 
+	if idx, err := strconv.Atoi(key); err == nil {
+		if idx > len(chooseRNS)-1 {
+			showNodes()
+			return
+		}
+		loginNode(chooseRNS[idx])
+
+	}
 	if len(rns) == 0 {
 		rns, err = getAllNodes()
 		if err != nil {
@@ -68,6 +77,10 @@ func handlerUserCmd(key string) {
 	return
 }
 
+func loginNode(rn model.RemoteNode) {
+	fmt.Printf("Login %s \n", rn.Ip)
+	return
+}
 func showNodes() {
 	fmt.Println("---------------------------------------------------------------")
 	fmt.Println()
