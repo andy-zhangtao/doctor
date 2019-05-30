@@ -5,7 +5,30 @@ import (
 	"github.com/andy-zhangtao/doctor/doctor/node"
 	"github.com/andy-zhangtao/doctor/doctor/store"
 	"github.com/graphql-go/graphql"
+	"github.com/sirupsen/logrus"
 )
+
+var addUser = &graphql.Field{
+	Type:        graphql.String,
+	Description: "Add New Doctor User",
+	Args: graphql.FieldConfigArgument{
+		"name": &graphql.ArgumentConfig{
+			Type: graphql.NewNonNull(graphql.String),
+		},
+	},
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+		name, _ := p.Args["name"].(string)
+
+		logrus.Debugf("Create New User [%s]\n", name)
+
+		err := node.InitDoctorNode(name)
+		if err != nil {
+			return nil, err
+		}
+
+		return "Succ", nil
+	},
+}
 
 var deleteNode = &graphql.Field{
 	Type:        graphql.String,

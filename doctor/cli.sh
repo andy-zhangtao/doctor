@@ -1,2 +1,2 @@
 #!/bin/sh
-/doctor -client
+cd /;/doctor -client

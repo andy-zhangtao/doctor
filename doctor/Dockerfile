@@ -1,6 +1,6 @@
 FROM vikings/alpine
 RUN  apk update && \
-    apk add openssh && \
+    apk add openssh shadow && \
     ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
     rm /var/cache/apk/*
 COPY motd /etc/motd

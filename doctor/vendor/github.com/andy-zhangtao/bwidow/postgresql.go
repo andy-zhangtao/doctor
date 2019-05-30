@@ -194,7 +194,7 @@ func (this *BWPostgresql) findOne(uPtr interface{}) error {
 
 	sql := fmt.Sprintf("SELECT %s FROM %s WHERE %s LIMIT 1", strings.Join(columns, ","), table, strings.Join(filter, " AND "))
 
-	// fmt.Println(sql)
+	//fmt.Println(sql)
 	rows, err := this.db.Query(sql)
 	if err != nil {
 		return errors.New(fmt.Sprintf("Query Rows Error [%s]", err.Error()))
