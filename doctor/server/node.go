@@ -21,12 +21,13 @@ var addUser = &graphql.Field{
 
 		logrus.Debugf("Create New User [%s]\n", name)
 
-		err := node.InitDoctorNode(name)
+		key, err := node.InitDoctorNode(name)
 		if err != nil {
 			return nil, err
 		}
 
-		return "Succ", nil
+		// fmt.Println(string(key))
+		return string(key), nil
 	},
 }
 
@@ -147,10 +148,17 @@ var addNode = &graphql.Field{
 			Comment:  comment,
 		}
 
+		node.SetupChan(rn.Ip)
+
 		err := node.NodeInit(rn)
 		if err != nil {
 			return nil, err
 		}
+
+		logrus.Debug("Ready Receive Register Message")
+		key := <-node.GetChan(ip)
+		rn.Key = key
+		rn.Name = "nurse"
 
 		err = store.SaveRemoteNode(rn)
 		if err != nil {

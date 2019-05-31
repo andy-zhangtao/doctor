@@ -67,7 +67,6 @@ var rootQuery = graphql.NewObject(graphql.ObjectConfig{
 				return "I AM Doctor", nil
 			},
 		},
-		"addNode":    addNode,
 		"watchNodes": watchNodes,
 	},
 })
@@ -77,5 +76,6 @@ var rootMutation = graphql.NewObject(graphql.ObjectConfig{
 		"updateNode": updateNode,
 		"deleteNode": deleteNode,
 		"addNewUser": addUser,
+		"addNode":    addNode,
 	},
 })

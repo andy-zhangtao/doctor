@@ -6,10 +6,13 @@ import (
 	"net"
 	"os"
 
+	"github.com/sirupsen/logrus"
+
 	"google.golang.org/grpc/reflection"
 
 	"google.golang.org/grpc"
 
+	"github.com/andy-zhangtao/doctor/doctor/node"
 	"github.com/andy-zhangtao/doctor/doctor/rpc/doctor_v1"
 )
 
@@ -17,6 +20,21 @@ type server struct{}
 
 func (s *server) Register(ctx context.Context, in *doctor_v1.DoctorRegister) (*doctor_v1.Reply, error) {
 
+	// 接受到远程节点注册信息
+	// rn := model.RemoteNode{
+	// 	Ip:  in.Ip,
+	// 	Key: in.Key,
+	// }
+
+	// if err := store.SaveRemoteNode(rn); err != nil {
+	// 	logrus.Errorf("Node Register Error: [%s]", err.Error())
+	// 	return nil, err
+	// }
+
+	logrus.Debugf("Docter Got Nurse [%s] Register Message ", in.Ip)
+	node.GetChan(in.Ip) <- in.Key
+
+	logrus.Debugf("Send [%s] Register Message ", in.Ip)
 	return &doctor_v1.Reply{
 		Msg: "OK",
 	}, nil

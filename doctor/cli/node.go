@@ -117,9 +117,9 @@ func showHead() {
 	fmt.Println()
 	fmt.Println("========DOCTOR========")
 	fmt.Println("")
-	fmt.Println("   1> 输入N/n 显示所有节点 ")
-	fmt.Println("   2> 输入F/f 上传/下载文件 ")
-	fmt.Println("   3> 输入Q/q 退出Doctor ")
+	fmt.Println("   1> 输入 N/n 显示所有节点 ")
+	fmt.Println("   2> 输入 F/f 上传/下载文件 ")
+	fmt.Println("   3> 输入 Q/q 退出Doctor ")
 	fmt.Println("")
 
 }

@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/andy-zhangtao/doctor/doctor/rpc/doctor_v1"
-	"google.golang.org/grpc"
+	"github.com/andy-zhangtao/doctor/nurse/rpc/doctor_v1"
+	grpc "google.golang.org/grpc"
 )
 
 // ReportNodeInfo 注册节点信息
-func ReportNodeInfo(address string) (err error) {
+func ReportNodeInfo(address, ip string, key []byte) (err error) {
 	return invoke(address, doctor_v1.DoctorRegister{
-		Ip: "localhost",
+		Ip:  ip,
+		Key: string(key),
 	})
 }
 

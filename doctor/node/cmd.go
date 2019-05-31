@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/sirupsen/logrus"
+
 	"github.com/andy-zhangtao/doctor/doctor/model"
 	"golang.org/x/crypto/ssh"
 )
@@ -15,7 +17,7 @@ func command(rn model.RemoteNode, cmd []string) (err error) {
 		User: rn.Name,
 		Auth: []ssh.AuthMethod{ssh.Password(rn.Password)},
 		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
-			fmt.Printf("Login %s As %s \n", rn.Ip, rn.Name)
+			logrus.Debugf("Login %s As %s \n", rn.Ip, rn.Name)
 			return nil
 		},
 	})

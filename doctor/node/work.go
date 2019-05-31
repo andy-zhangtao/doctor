@@ -28,7 +28,7 @@ func NodeInit(rn model.RemoteNode) (err error) {
 		return
 	}
 
-	err = command(rn, []string{fmt.Sprintf("%s/d_%s -server %s", destDir, nurseBIN, os.Getenv("DOCTOR_GRPC_SERVER"))})
+	err = command(rn, []string{fmt.Sprintf("%s/d_%s -server %s -ip %s", destDir, nurseBIN, os.Getenv("DOCTOR_GRPC_SERVER"), rn.Ip)})
 	if err != nil {
 		err = fmt.Errorf("Exec Command In Remote Node Error: %s", err.Error())
 		return
