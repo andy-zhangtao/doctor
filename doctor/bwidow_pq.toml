@@ -1,0 +1,4 @@
+Endpoint = "doctor.yqxiu.cn:5432"
+DB = "postgres"
+User = "postgres"
+Password = "123456"

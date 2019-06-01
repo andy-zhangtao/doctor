@@ -1,0 +1,19 @@
+syntax = "proto3";
+package doctor_v1;
+
+message DoctorRegister {
+    string ip =1;
+    string key =2;
+    string hostname = 3;
+    string os = 4;
+    int32 cpu = 5;
+    int32 memory = 6;
+    int32 disk = 7;
+}
+
+message Reply {
+    string msg = 1;
+}
+service RNRegister{
+    rpc Register(DoctorRegister) returns(Reply){}
+}
