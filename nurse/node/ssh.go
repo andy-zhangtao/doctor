@@ -47,3 +47,22 @@ func ubuntuSetupSSH() (key []byte, err error) {
 
 	return ioutil.ReadFile(fmt.Sprintf("/home/%s/.ssh/id_rsa", user))
 }
+
+func coreosSetupSSH() (privateKey, publicKey []byte, err error) {
+	cmd := fmt.Sprintf("ssh-keygen -f /tmp/%s_id_rsa -q -N \"\"", user)
+	if err := exec.Command("sh", "-c", cmd).Run(); err != nil {
+		return privateKey, publicKey, fmt.Errorf("create user key error: %s", err.Error())
+	}
+
+	privateKey, err = ioutil.ReadFile(fmt.Sprintf("/tmp/%s_id_rsa", user))
+	if err != nil {
+		return
+	}
+
+	publicKey, err = ioutil.ReadFile(fmt.Sprintf("/tmp/%s_id_rsa.pub", user))
+	if err != nil {
+		return
+	}
+
+	return
+}

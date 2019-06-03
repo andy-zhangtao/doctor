@@ -1,7 +1,7 @@
 
 .PHONY: build
 name = doctor
-version = v0.1
+version = latest
 
 build:
 	go build -ldflags "-X main._VERSION_=$(shell date +%Y%m%d-%H%M%S)" -o $(name)
