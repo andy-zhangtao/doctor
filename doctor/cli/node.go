@@ -14,6 +14,14 @@ import (
 var err error
 var rns []model.RemoteNode
 var chooseRNS []model.RemoteNode
+var cmdtype int
+
+const (
+	// CmdLoginType 登录命令
+	CmdLoginType = iota
+	// CmdSftpType SFTP命令
+	CmdSftpType
+)
 
 // Command 处理用户输入的命令
 // Q/q 退出
@@ -24,17 +32,23 @@ var chooseRNS []model.RemoteNode
 func Command() {
 	reader := bufio.NewReader(os.Stdin)
 	for {
-		fmt.Printf(">>>  ")
+		fmt.Printf("D>>>  ")
 		cmd, _ := reader.ReadString('\n')
-		cmd = strings.TrimSpace(cmd)
+		cmd = textFormate(cmd)
 		switch cmd {
 		case "Q":
 			fallthrough
 		case "q":
 			return
+		// case "F":
+		// 	fallthrough
+		// case "f":
+		// 	cmdtype = CmdSftpType
+		// 	showNodes()
 		case "N":
 			fallthrough
 		case "n":
+			cmdtype = CmdLoginType
 			showNodes()
 		default:
 			handlerUserCmd(cmd)
@@ -42,21 +56,29 @@ func Command() {
 	}
 }
 
-func handlerUserCmd(key string) {
-	// if key == "" {
-	// 	// 如果输入的是回车，则直接输出所有节点列表
-	// 	showNodes()
-	// 	return
-	// }
+func textFormate(text string) string {
+	text = strings.Replace(text, "\n", "", -1)
+	return strings.TrimSpace(text)
+}
 
+func handlerUserCmd(key string) {
+	outputMode()
 	if idx, err := strconv.Atoi(key); err == nil {
+		// 处理用户选中的节点ID
 		if idx > len(chooseRNS)-1 {
 			showNodes()
 			return
 		}
-		loginNode(chooseRNS[idx])
+
+		switch cmdtype {
+		case CmdLoginType:
+			loginNode(chooseRNS[idx])
+		case CmdSftpType:
+			sftpNode(chooseRNS[idx])
+		}
 
 	}
+
 	if len(rns) == 0 {
 		rns, err = getAllNodes()
 		if err != nil {
@@ -77,8 +99,15 @@ func handlerUserCmd(key string) {
 	return
 }
 
+func sftpNode(rn model.RemoteNode) {
+	err := node.Sftp(rn)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return
+}
+
 func loginNode(rn model.RemoteNode) {
-	fmt.Printf("Login %s \n", rn.Ip)
 	err := node.Login(rn)
 	if err != nil {
 		fmt.Println(err)
@@ -99,6 +128,7 @@ func showNodes() {
 	}
 
 	if len(chooseRNS) == 0 {
+		outputMode()
 		fmt.Println("No Match Node!")
 	} else {
 		for i, r := range chooseRNS {
@@ -113,13 +143,11 @@ func getAllNodes() (rns []model.RemoteNode, err error) {
 	return node.FindAllNodes()
 }
 
-func showHead() {
-	fmt.Println()
-	fmt.Println("========DOCTOR========")
-	fmt.Println("")
-	fmt.Println("   1> 输入 N/n 显示所有节点 ")
-	fmt.Println("   2> 输入 F/f 上传/下载文件 ")
-	fmt.Println("   3> 输入 Q/q 退出Doctor ")
-	fmt.Println("")
-
+func outputMode() {
+	switch cmdtype {
+	case CmdLoginType:
+		fmt.Println("Login Model!")
+	case CmdSftpType:
+		fmt.Println("SFTP Model!")
+	}
 }

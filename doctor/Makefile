@@ -1,6 +1,7 @@
 
 .PHONY: build
 name = doctor
+version = v0.1
 
 build:
 	go build -ldflags "-X main._VERSION_=$(shell date +%Y%m%d-%H%M%S)" -o $(name)
@@ -10,6 +11,6 @@ run: build
 
 release: *.go *.md
 	GOOS=linux GOARCH=amd64 go build -ldflags "-X main._VERSION_=$(shell date +%Y%m%d)" -a -o $(name)
-	docker build -t vikings/$(name) .
-	docker push vikings/$(name)
+	docker build -t vikings/$(name):$(version) .
+	docker push vikings/$(name):$(version)
 	rm $(name)
