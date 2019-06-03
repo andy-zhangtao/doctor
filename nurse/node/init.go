@@ -52,13 +52,21 @@ func createUser() (key []byte, err error) {
 		if key, err = setupUbuntu(); err != nil {
 			return nil, err
 		}
+		return key, raiseSudo()
 	} else if strings.Contains(linuxVersion, "centos") {
 		if err := setupCentos(); err != nil {
 			return nil, err
 		}
+	} else if strings.Contains(linuxVersion, "coreos") {
+		clearUserInCoreos()
+		if key, err = setupCoreos(); err != nil {
+			return nil, err
+		}
+		afterEnableUserInCoreos()
+		return key, nil
 	}
 
-	return key, raiseSudo()
+	return
 }
 
 func raiseSudo() (err error) {
